@@ -15,7 +15,7 @@ public class Game implements Runnable{
     private Display display;
     public int width, height, score;
     private String title;
-    private String version = "Space Shooter Test v1.2";
+    private String version = "Space Shooter Test v1.2.1";
 
     private boolean running = false;
     private Thread thread;
