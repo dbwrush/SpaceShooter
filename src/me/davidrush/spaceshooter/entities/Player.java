@@ -35,15 +35,15 @@ public class Player extends Actor{
 
     public void getInput() {
         xMove = 0;
-        yMove = 0;
+        yMove = (-acceleration / 2) * (power[2] / 3);
         if(game.getKeyManager().fire) {
             fire();
         }
         if(game.getKeyManager().up) {//move up
-            yMove -= acceleration;
+            yMove -= acceleration * (power[2] / 3);
         }
         if(game.getKeyManager().down) {//move down
-            yMove += acceleration;
+            yMove += acceleration * (power[2] / 3);
         }
         if(game.getKeyManager().left) {//move left
             xMove -= acceleration;

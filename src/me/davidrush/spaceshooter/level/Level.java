@@ -65,6 +65,7 @@ public class Level {
             actor.render(g);
         }
         player.render(g);
+        g.drawString("Score: " + game.score, 5, 20);
     }
 
     public ArrayList<Entity> getEntities() {
