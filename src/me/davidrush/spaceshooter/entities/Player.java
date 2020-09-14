@@ -14,6 +14,7 @@ public class Player extends Actor{
     private int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = speed
     private int powerSelect = 0, availablePower, powerChangeDelay = 10, fireDelay = 10, timeSincePowerChange = 0, timeSinceLastFire = 0;
     private static final int maxPower = 12, defaultHealth = 20;
+    private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {
         super(x, y, acceleration, Assets.player.getWidth(), Assets.player.getHeight(), defaultHealth, level, game);
         hud = new HUD(this, game);
@@ -73,6 +74,7 @@ public class Player extends Actor{
         } else {
             timeSincePowerChange++;
         }
+        laserSpeed = (acceleration * 3) - yMove;
         timeSinceLastFire++;
     }
 
@@ -80,7 +82,7 @@ public class Player extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y, acceleration * 3, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
+        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
         timeSinceLastFire = 0;
     }
 

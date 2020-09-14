@@ -29,10 +29,7 @@ public abstract class Entity {
     public boolean checkEntityCollisions(float newX, float newY) {
         for(Entity entity : level.getEntities()) {
             if(!entity.equals(this)) {
-                if(newX <= entity.getX() + entity.getWidth() &&
-                        newX + width >= entity.getX() &&
-                        newY <= entity.getY() + entity.getHeight() &&
-                        newY + height >= entity.getY()) {
+                if(checkCollide(entity, newX, newY)) {
                     return true;
                 }
             }
