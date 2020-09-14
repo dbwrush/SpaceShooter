@@ -29,7 +29,7 @@ public class Level {
 
     public void tick() {
         if(Math.random() <= 0.005) {
-            addActor(new EnemyScout((float)Math.random() * game.width, (float)(cameraY), 1f, 20, this, game));
+            addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f, 10, this, game));
         }
         float startCameraY = cameraY;
         player.tick();
