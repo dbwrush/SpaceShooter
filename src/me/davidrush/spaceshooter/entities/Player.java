@@ -49,10 +49,10 @@ public class Player extends Actor{
             yMove += acceleration * enginePower;
         }
         if(game.getKeyManager().left) {//move left
-            xMove -= acceleration;
+            xMove -= 2 * acceleration;
         }
         if(game.getKeyManager().right) {//move right
-            xMove += acceleration;
+            xMove += 2 * acceleration;
         }
         if(game.getKeyManager().engineSelect) {
             powerSelect = 2;

@@ -7,6 +7,7 @@ import me.davidrush.spaceshooter.level.Level;
 import me.davidrush.spaceshooter.states.GameOverState;
 import me.davidrush.spaceshooter.states.GameState;
 import me.davidrush.spaceshooter.states.State;
+import me.davidrush.spaceshooter.states.TitleScreenState;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -15,7 +16,7 @@ public class Game implements Runnable{
     private Display display;
     public int width, height, score;
     private String title;
-    private String version = "Space Shooter Test v1.2.1";
+    private String version = "Space Shooter Test v1.3";
 
     private boolean running = false;
     private Thread thread;
@@ -40,8 +41,8 @@ public class Game implements Runnable{
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
-        gameState = new GameState(this);
-        State.setCurrentState(gameState);
+        TitleScreenState titleScreenState = new TitleScreenState(this);
+        State.setCurrentState(titleScreenState);
     }
 
     private void tick() {

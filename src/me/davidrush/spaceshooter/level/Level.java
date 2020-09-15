@@ -21,7 +21,7 @@ public class Level {
         entities = new ArrayList<Entity>();
         actors = new ArrayList<Actor>();
         toRemove = new ArrayList<Entity>();
-        player = new Player(game.width / 2, game.height, 2f, this, game);
+        player = new Player(game.width / 2, game.height, 1f, this, game);
         for(int i = 0; i < stars.length; i++) {
             stars[i] = new Star((float)(Math.random() * game.width), (float)(cameraY + Assets.player.getHeight() +(Math.random() * game.height)), this, game);
         }
