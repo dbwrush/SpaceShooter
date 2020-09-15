@@ -12,11 +12,11 @@ public class Player extends Actor{
     private HUD hud;
     private BufferedImage sprite;
     private int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = speed
-    private int powerSelect = 0, availablePower, powerChangeDelay = 10, fireDelay = 10, timeSincePowerChange = 0, timeSinceLastFire = 0;
+    private int powerSelect = 0, availablePower, powerChangeDelay = 10, fireDelay = 60, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {
-        super(x, y, acceleration, Assets.player.getWidth(), Assets.player.getHeight(), defaultHealth, level, game);
+        super(x, y, acceleration, Assets.player.getWidth(), Assets.player.getHeight(), defaultHealth, level, game, Assets.player);
         hud = new HUD(this, game);
         health = defaultHealth;
         sprite = Assets.player;
@@ -74,7 +74,7 @@ public class Player extends Actor{
         } else {
             timeSincePowerChange++;
         }
-        laserSpeed = (acceleration * 3) - yMove;
+        laserSpeed = (acceleration * 10) - yMove;
         timeSinceLastFire++;
     }
 
@@ -97,6 +97,7 @@ public class Player extends Actor{
 
     @Override
     public void render(Graphics g) {
+        drawHeatlhBar(g);
         g.drawImage(sprite, (int)x, (int)level.getCameraOffset(), null);
         hud.render(g);
     }

@@ -1,9 +1,11 @@
 package me.davidrush.spaceshooter.entities;
 
 import me.davidrush.spaceshooter.Game;
+import me.davidrush.spaceshooter.graphics.Assets;
 import me.davidrush.spaceshooter.level.Level;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class Entity {

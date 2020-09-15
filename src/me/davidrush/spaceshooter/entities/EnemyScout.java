@@ -9,12 +9,13 @@ import java.awt.image.BufferedImage;
 
 public class EnemyScout extends Actor{
     BufferedImage sprite;
-    int laserStrength = 5, fireDelay = 60, timeSinceLastFire = 0, pointValue = 10;
-    boolean avoidByGoingRight;
+    private static int laserStrength = 2, fireDelay = 60, pointValue = 10, defaultHealth = 5;
+    private int timeSinceLastFire = 0;
+    private boolean avoidByGoingRight;
     Player player;
-    public EnemyScout(float x, float y, float acceleration, int health, Level level, Game game) {
-        super(x, y, acceleration, Assets.enemyScout.getWidth(), Assets.enemyScout.getHeight(), health, level, game);
-        this.health = health;
+    public EnemyScout(float x, float y, float acceleration, Level level, Game game) {
+        super(x, y, acceleration, Assets.enemyScout.getWidth(), Assets.enemyScout.getHeight(), defaultHealth, level, game, Assets.enemyScout);
+        this.health = defaultHealth;
         this.sprite = Assets.enemyScout;
         player = level.getPlayer();
         avoidByGoingRight = Math.random() < 0.5;
@@ -61,6 +62,7 @@ public class EnemyScout extends Actor{
 
     @Override
     public void render(Graphics g) {
+        drawHeatlhBar(g);
         g.drawImage(sprite, (int)x, (int)(y- level.getCameraY()), null);
     }
 }
