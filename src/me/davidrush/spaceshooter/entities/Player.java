@@ -9,10 +9,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends Actor{
-    private HUD hud;
-    private BufferedImage sprite;
-    private int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = speed
-    private int powerSelect = 0, availablePower, powerChangeDelay = 10, fireDelay = 60, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
+    private final HUD hud;
+    private final BufferedImage sprite;
+    private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 =
+    private final int powerChangeDelay = 10, fireDelay = 40;
+    private int powerSelect = 0, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {
@@ -38,7 +39,7 @@ public class Player extends Actor{
         double enginePower = power[2];
         enginePower = (enginePower / 3) + 1;
         xMove = 0;
-        yMove = (float)((-acceleration / 2) * enginePower);
+        yMove = (float)((2 * -acceleration / 3) * enginePower);
         if(game.getKeyManager().fire) {
             fire();
         }
@@ -82,7 +83,7 @@ public class Player extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
+        level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
         timeSinceLastFire = 0;
     }
 
@@ -97,8 +98,8 @@ public class Player extends Actor{
 
     @Override
     public void render(Graphics g) {
-        drawHeatlhBar(g);
-        g.drawImage(sprite, (int)x, (int)level.getCameraOffset(), null);
+        drawHealthBar(g);
+        g.drawImage(sprite, (int)x, level.getCameraOffset(), null);
         hud.render(g);
     }
 

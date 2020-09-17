@@ -1,12 +1,9 @@
 package me.davidrush.spaceshooter.entities;
 
 import me.davidrush.spaceshooter.Game;
-import me.davidrush.spaceshooter.graphics.Assets;
 import me.davidrush.spaceshooter.level.Level;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public abstract class Entity {
     protected float x, y, xMove, yMove, acceleration;
@@ -40,13 +37,10 @@ public abstract class Entity {
     }
 
     public boolean checkCollide(Entity entity, float newX, float newY) {
-        if(newX <= entity.getX() + entity.getWidth() &&
+        return newX <= entity.getX() + entity.getWidth() &&
                 newX + width >= entity.getX() &&
                 newY <= entity.getY() + entity.getHeight() &&
-                newY + height >= entity.getY()) {
-            return true;
-        }
-        return false;
+                newY + height >= entity.getY();
     }
 
     public void move() {

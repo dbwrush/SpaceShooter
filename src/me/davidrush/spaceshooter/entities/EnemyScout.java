@@ -34,7 +34,7 @@ public class EnemyScout extends Actor{
             } else if(x < player.getX()){
                 xMove = acceleration;
             }
-            if(Math.abs(x - player.getX()) < sprite.getWidth() / 2) {
+            if(Math.abs(x - player.getX()) < sprite.getWidth() / 2.0) {
                 fire();
             }
         } else {//if we can't fire soon
@@ -62,7 +62,7 @@ public class EnemyScout extends Actor{
 
     @Override
     public void render(Graphics g) {
-        drawHeatlhBar(g);
+        drawHealthBar(g);
         g.drawImage(sprite, (int)x, (int)(y- level.getCameraY()), null);
     }
 }

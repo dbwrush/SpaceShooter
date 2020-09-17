@@ -9,10 +9,11 @@ import java.awt.image.BufferedImage;
 
 public abstract class Actor extends Entity{
     protected int health, scale = 5;
-    private BufferedImage healthColor, sprite;
+    private final BufferedImage healthColor, sprite;
     public Actor(float x, float y, float acceleration, int width, int height, int health, Level level, Game game, BufferedImage sprite) {
         super(x, y, acceleration, width, height, level, game);
         healthColor = Assets.colors[1];
+        this.health = health;
         this.sprite = sprite;
     }
 
@@ -48,7 +49,7 @@ public abstract class Actor extends Entity{
 
     public abstract void render(Graphics g);
 
-    public void drawHeatlhBar(Graphics g) {
+    public void drawHealthBar(Graphics g) {
         int offset = ((health * scale) / 2) - (sprite.getWidth() / 2);
         for(int i = 0; i < health; i++) {
             g.drawImage(healthColor, (int)(x + (scale * i)) - offset, (int)(y - level.getCameraY()), healthColor.getWidth() * scale, healthColor.getHeight() * scale, null);
