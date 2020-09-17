@@ -90,6 +90,9 @@ public class Player extends Actor{
     @Override
     public void damage(int amount) {
         amount = amount / ((power[1] / 3) + 1);
+        if(amount <= 1) {
+            amount = 1;
+        }
         health -= amount;
         if(health <= 0) {
             game.gameOver();
