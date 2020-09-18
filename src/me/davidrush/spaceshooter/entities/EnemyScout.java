@@ -62,7 +62,7 @@ public class EnemyScout extends Actor{
 
     @Override
     public void render(Graphics g) {
-        drawHealthBar(g);
+        drawHealthBar(g, (int)(y - level.getCameraY()));
         g.drawImage(sprite, (int)x, (int)(y- level.getCameraY()), null);
     }
 }

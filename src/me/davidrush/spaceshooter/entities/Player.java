@@ -101,7 +101,7 @@ public class Player extends Actor{
 
     @Override
     public void render(Graphics g) {
-        drawHealthBar(g);
+        drawHealthBar(g,(int)(y - level.getCameraY()) + sprite.getHeight());
         g.drawImage(sprite, (int)x, level.getCameraOffset(), null);
         hud.render(g);
     }
