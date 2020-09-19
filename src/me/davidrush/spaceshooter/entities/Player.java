@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class Player extends Actor{
     private final HUD hud;
     private final BufferedImage sprite;
-    private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 =
+    private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = engines/speed
     private final int powerChangeDelay = 10, fireDelay = 40;
     private int powerSelect = 0, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
     private static final int maxPower = 12, defaultHealth = 20;

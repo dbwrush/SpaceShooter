@@ -11,7 +11,8 @@ public class Level {
     private Game game;
     private Player player;
     private float cameraY, distance;
-    private int cameraOffset = 620;
+    private int cameraOffset = 620, enemySpawnDelay = 240;
+    private double difficulty = 0;
     private ArrayList<Entity> entities, toRemove;
     private ArrayList<Actor> actors;
     private Entity[] stars = new Entity[100];
@@ -28,7 +29,7 @@ public class Level {
     }
 
     public void tick() {
-        if(Math.random() <= 0.005) {
+        if(Math.random() <= difficulty) {//enemies will spawn more frequently over time.
             addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f,  this, game));
         }
         float startCameraY = cameraY;
@@ -52,6 +53,13 @@ public class Level {
             }
         }
         toRemove.clear();
+        enemySpawnDelay--;
+        if(enemySpawnDelay >= -60 && enemySpawnDelay <= 0) {
+            difficulty = 0.005;
+        } else if(enemySpawnDelay < -60) {
+            difficulty += 0.0000001;
+        }
+        System.out.println("Difficulty: " + difficulty);
     }
 
     public void render(Graphics g) {
