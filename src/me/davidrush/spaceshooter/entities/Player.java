@@ -13,7 +13,7 @@ public class Player extends Actor{
     private final BufferedImage sprite;
     private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = engines/speed
     private final int powerChangeDelay = 10, fireDelay = 40;
-    private int powerSelect = 0, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
+    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {
@@ -55,28 +55,27 @@ public class Player extends Actor{
         if(game.getKeyManager().right) {//move right
             xMove += 2 * acceleration;
         }
-        if(game.getKeyManager().engineSelect) {
-            powerSelect = 2;
+        if(game.getKeyManager().engineSelect && !game.getKeyManager().shift) {
+            increasePower(2);
         }
-        if(game.getKeyManager().shieldSelect) {
-            powerSelect = 1;
+        if(game.getKeyManager().shieldSelect && !game.getKeyManager().shift) {
+            increasePower(1);
         }
-        if(game.getKeyManager().weaponSelect) {
-            powerSelect = 0;
+        if(game.getKeyManager().weaponSelect && !game.getKeyManager().shift) {
+            increasePower(0);
         }
-        if(game.getKeyManager().powerUp && availablePower > 0 && timeSincePowerChange > powerChangeDelay) {
-            power[powerSelect]++;
-            availablePower--;
-            timeSincePowerChange = 0;
-        } else if(game.getKeyManager().powerDown && timeSincePowerChange > powerChangeDelay && power[powerSelect] > 0) {
-            availablePower++;
-            power[powerSelect]--;
-            timeSincePowerChange = 0;
-        } else {
-            timeSincePowerChange++;
+        if(game.getKeyManager().engineSelect && game.getKeyManager().shift) {
+            decreasePower(2);
+        }
+        if(game.getKeyManager().shieldSelect && game.getKeyManager().shift) {
+            decreasePower(1);
+        }
+        if(game.getKeyManager().weaponSelect && game.getKeyManager().shift) {
+            decreasePower(0);
         }
         laserSpeed = (acceleration * 10) - yMove;
         timeSinceLastFire++;
+        timeSincePowerChange++;
     }
 
     public void fire() {
@@ -85,6 +84,30 @@ public class Player extends Actor{
         }
         level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
         timeSinceLastFire = 0;
+    }
+
+    public void increasePower(int selection) {
+        if(timeSincePowerChange < powerChangeDelay) {
+            return;
+        }
+        powerSelect = selection;
+        if(availablePower >= 1 && power[selection] <= maxPower - 1) {
+            power[selection] += 1;
+            availablePower -= 1;
+        }
+        timeSincePowerChange = 0;
+    }
+
+    public void decreasePower(int selection) {
+        if(timeSincePowerChange < powerChangeDelay) {
+            return;
+        }
+        powerSelect = selection;
+        if(availablePower <= maxPower - 1 && power[selection] >= 1) {
+            power[selection] -= 1;
+            availablePower += 1;
+        }
+        timeSincePowerChange = 0;
     }
 
     @Override
@@ -110,11 +133,11 @@ public class Player extends Actor{
         return power;
     }
 
-    public int getAvailablePower() {
-        return availablePower;
-    }
-
     public int getPowerSelect() {
         return powerSelect;
+    }
+
+    public int getAvailablePower() {
+        return availablePower;
     }
 }

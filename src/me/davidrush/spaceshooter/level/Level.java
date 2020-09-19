@@ -59,7 +59,6 @@ public class Level {
         } else if(enemySpawnDelay < -60) {
             difficulty += 0.0000001;
         }
-        System.out.println("Difficulty: " + difficulty);
     }
 
     public void render(Graphics g) {
