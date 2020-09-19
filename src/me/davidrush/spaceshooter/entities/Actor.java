@@ -8,12 +8,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Actor extends Entity{
-    protected int health, scale = 5;
-    private BufferedImage healthColor, sprite;
+    protected int health, scale = 5, healthOffset;
+    private final BufferedImage healthColor, sprite;
     public Actor(float x, float y, float acceleration, int width, int height, int health, Level level, Game game, BufferedImage sprite) {
         super(x, y, acceleration, width, height, level, game);
         healthColor = Assets.colors[1];
+        this.health = health;
         this.sprite = sprite;
+        healthOffset = ((health * scale) / 2) - (sprite.getWidth() / 2);
     }
 
     @Override
@@ -37,8 +39,8 @@ public abstract class Actor extends Entity{
         if(x < 0) {
             x = 0;
         }
-        if(x > game.width) {
-            x = game.width;
+        if(x > game.width - sprite.getWidth()) {
+            x = game.width - sprite.getWidth();
         }
     }
 
@@ -48,10 +50,9 @@ public abstract class Actor extends Entity{
 
     public abstract void render(Graphics g);
 
-    public void drawHeatlhBar(Graphics g) {
-        int offset = ((health * scale) / 2) - (sprite.getWidth() / 2);
+    public void drawHealthBar(Graphics g, int drawY) {
         for(int i = 0; i < health; i++) {
-            g.drawImage(healthColor, (int)(x + (scale * i)) - offset, (int)(y - level.getCameraY()), healthColor.getWidth() * scale, healthColor.getHeight() * scale, null);
+            g.drawImage(healthColor, (int)(x + (scale * i)) - healthOffset, drawY, healthColor.getWidth() * scale, healthColor.getHeight() * scale, null);
         }
     }
 

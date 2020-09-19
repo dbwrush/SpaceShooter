@@ -3,7 +3,6 @@ package me.davidrush.spaceshooter;
 import me.davidrush.Display;
 import me.davidrush.KeyManager;
 import me.davidrush.spaceshooter.graphics.Assets;
-import me.davidrush.spaceshooter.level.Level;
 import me.davidrush.spaceshooter.states.GameOverState;
 import me.davidrush.spaceshooter.states.GameState;
 import me.davidrush.spaceshooter.states.State;
@@ -15,20 +14,20 @@ import java.awt.image.BufferStrategy;
 public class Game implements Runnable{
     private Display display;
     public int width, height, score;
-    private String title;
-    private String version = "Space Shooter Test v1.3";
+    private final String title;
+    private static final String version = "Space Shooter Test v1.3";
 
     private boolean running = false;
     private Thread thread;
 
-    private BufferStrategy bs;
-    private Graphics g;
+    protected BufferStrategy bs;
+    protected Graphics g;
 
     //io
-    private KeyManager keyManager;
+    private final KeyManager keyManager;
 
     //states
-    private State gameState;
+    protected static State gameState;
 
     public Game(String title, int width, int height) {
         this.width = width;
@@ -82,7 +81,7 @@ public class Game implements Runnable{
     public void run() {
         init();
 
-        int desiredFPS = 60;
+        double desiredFPS = 60;
         double timePerTick = 1000000000 / desiredFPS;
         double delta = 0;
         long now;
@@ -135,7 +134,7 @@ public class Game implements Runnable{
             try {
                 thread.join();
             } catch(InterruptedException e) {
-
+                e.printStackTrace();
             }
         }
     }
