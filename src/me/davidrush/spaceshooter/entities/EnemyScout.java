@@ -56,7 +56,7 @@ public class EnemyScout extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game));
+        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game, yMove));
         timeSinceLastFire = 0;
     }
 

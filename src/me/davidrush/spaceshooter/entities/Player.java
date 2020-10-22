@@ -82,7 +82,7 @@ public class Player extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game));
+        level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game, yMove));
         timeSinceLastFire = 0;
     }
 

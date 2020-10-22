@@ -12,12 +12,12 @@ public class Laser extends Entity{
     float xSpeed, ySpeed;
     int scale = 3, strength;
     boolean fromPlayer;
-    public Laser(float x, float y, float acceleration, double angle, BufferedImage color, boolean fromPlayer, int strength, Level level, Game game) {
+    public Laser(float x, float y, float acceleration, double angle, BufferedImage color, boolean fromPlayer, int strength, Level level, Game game, float creatorYMove) {
         super(x, y, acceleration, color.getWidth(), color.getHeight(), level, game);
         this.color = color;
         this.fromPlayer = fromPlayer;
         this.strength = strength;
-        ySpeed = (float)Math.sin(angle) * acceleration;
+        ySpeed = (float)Math.sin(angle) * acceleration + creatorYMove;
         xSpeed = (float)Math.cos(angle) * acceleration;
     }
 

@@ -7,18 +7,16 @@ import me.davidrush.spaceshooter.level.Level;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class EnemyBomber extends Actor{
+public class EnemyFighter extends Actor{
     BufferedImage sprite;
-    private static int laserStrength = 9, fireDelay = 120, pointValue = 20, defaultHealth = 10, leftTurretOffset, rightTurretOffset;
+    private static int laserStrength = 3, fireDelay = 30, pointValue = 30, defaultHealth = 10;
     private int timeSinceLastFire = 0;
     private boolean avoidByGoingRight;
     Player player;
-    public EnemyBomber(float x, float y, float acceleration, Level level, Game game) {
-        super(x, y, acceleration, Assets.enemyBomber.getWidth(), Assets.enemyBomber.getHeight(), defaultHealth, level, game, Assets.enemyBomber);
+    public EnemyFighter(float x, float y, float acceleration, Level level, Game game) {
+        super(x, y, acceleration, Assets.enemyFighter.getWidth(), Assets.enemyFighter.getHeight(), defaultHealth, level, game, Assets.enemyFighter);
         this.health = defaultHealth;
-        this.sprite = Assets.enemyBomber;
-        leftTurretOffset = 8;
-        rightTurretOffset = sprite.getWidth() - leftTurretOffset;
+        this.sprite = Assets.enemyFighter;
         player = level.getPlayer();
         avoidByGoingRight = Math.random() < 0.5;
     }
@@ -30,20 +28,19 @@ public class EnemyBomber extends Actor{
             x = (float)Math.random() * game.width;
         }
         yMove = acceleration;
-        if(timeSinceLastFire > fireDelay) {//if we can fire soon, get in front of the player to shoot them.
-            if(x > player.getX()) {
-                xMove = -acceleration;
-            } else if(x < player.getX()){
-                xMove = acceleration;
-            }
-            if(Math.abs(x - player.getX()) < sprite.getWidth() / 2.0) {
-                fire();
-            }
+        if(timeSinceLastFire > fireDelay && y < player.getY()) {//if we can fire soon, get in front of the player to shoot them.
+            fire();
         } else {//if we can't fire soon
             if(avoidByGoingRight) {
                 xMove = acceleration;
+                if(x >= game.width) {
+                    avoidByGoingRight = false;
+                }
             } else {
                 xMove = -acceleration;
+                if(x <= 0) {
+                    avoidByGoingRight = true;
+                }
             }
             timeSinceLastFire++;
         }
@@ -58,8 +55,10 @@ public class EnemyBomber extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + leftTurretOffset, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game, yMove));
-        level.addEntity(new Laser(x  + rightTurretOffset, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game, yMove));
+        float playerX = (int)player.getX();
+        float playerY = (int)player.getY();
+        double angle = -Math.atan2(playerY - y, playerX - x);
+        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, angle , Assets.colors[1], false, laserStrength, level, game, yMove));
         timeSinceLastFire = 0;
     }
 
