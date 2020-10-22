@@ -32,12 +32,12 @@ public class Level {
         double rand = Math.random();
         if(rand <= Math.sqrt(difficulty) / 10000) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
-            if(enemyType > 0.001) {
-                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f,  this, game));
+            if(enemyType > 0.1) {
+                addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
             } else if(enemyType > 0.01) {
-                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
-            } else if(enemyType > 0.1) {
-                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
+                addActor(new EnemyBomber((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
+            } else if(enemyType > 0.001) {
+                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f,  this, game));
             }
         }
         float startCameraY = cameraY;
@@ -76,7 +76,7 @@ public class Level {
         }
         player.render(g);
         g.drawString("Score: " + game.score, 5, 20);
-        g.drawString("Difficulty: " + difficulty, 5, 50);
+        g.drawString("Difficulty: " + (Math.sqrt(difficulty) / 10000), 5, 50);
     }
 
     public ArrayList<Entity> getEntities() {
