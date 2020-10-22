@@ -30,7 +30,7 @@ public class Level {
 
     public void tick() {
         if(Math.random() <= difficulty) {//enemies will spawn more frequently over time.
-            addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f,  this, game));
+            addActor(new EnemyBomber((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
         }
         float startCameraY = cameraY;
         player.tick();

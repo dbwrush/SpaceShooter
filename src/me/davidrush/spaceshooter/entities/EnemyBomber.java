@@ -9,14 +9,16 @@ import java.awt.image.BufferedImage;
 
 public class EnemyBomber extends Actor{
     BufferedImage sprite;
-    private static int laserStrength = 9, fireDelay = 120, pointValue = 20, defaultHealth = 10;
+    private static int laserStrength = 9, fireDelay = 120, pointValue = 20, defaultHealth = 10, leftTurretOffset, rightTurretOffset;
     private int timeSinceLastFire = 0;
     private boolean avoidByGoingRight;
     Player player;
     public EnemyBomber(float x, float y, float acceleration, Level level, Game game) {
-        super(x, y, acceleration, Assets.enemyScout.getWidth(), Assets.enemyScout.getHeight(), defaultHealth, level, game, Assets.enemyScout);
+        super(x, y, acceleration, Assets.enemyBomber.getWidth(), Assets.enemyBomber.getHeight(), defaultHealth, level, game, Assets.enemyBomber);
         this.health = defaultHealth;
-        this.sprite = Assets.enemyScout;
+        this.sprite = Assets.enemyBomber;
+        leftTurretOffset = 8;
+        rightTurretOffset = sprite.getWidth() - leftTurretOffset;
         player = level.getPlayer();
         avoidByGoingRight = Math.random() < 0.5;
     }
@@ -56,7 +58,8 @@ public class EnemyBomber extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game));
+        level.addEntity(new Laser(x  + leftTurretOffset, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game));
+        level.addEntity(new Laser(x  + rightTurretOffset, y + sprite.getHeight(), acceleration * 3, 3 * Math.PI / 2 , Assets.colors[1], false, laserStrength, level, game));
         timeSinceLastFire = 0;
     }
 
