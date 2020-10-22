@@ -29,8 +29,16 @@ public class Level {
     }
 
     public void tick() {
-        if(Math.random() <= difficulty) {//enemies will spawn more frequently over time.
-            addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
+        double rand = Math.random();
+        if(rand <= Math.sqrt(difficulty) / 10000) {//enemies will spawn more frequently over time.
+            double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
+            if(enemyType > 0.001) {
+                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyScout.getHeight(), 1f,  this, game));
+            } else if(enemyType > 0.01) {
+                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
+            } else if(enemyType > 0.1) {
+                addActor(new EnemyScout((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
+            }
         }
         float startCameraY = cameraY;
         player.tick();
@@ -53,12 +61,7 @@ public class Level {
             }
         }
         toRemove.clear();
-        enemySpawnDelay--;
-        if(enemySpawnDelay >= -60 && enemySpawnDelay <= 0) {
-            difficulty = 0.005;
-        } else if(enemySpawnDelay < -60) {
-            difficulty += 0.0000001;
-        }
+        difficulty++;
     }
 
     public void render(Graphics g) {
@@ -73,6 +76,7 @@ public class Level {
         }
         player.render(g);
         g.drawString("Score: " + game.score, 5, 20);
+        g.drawString("Difficulty: " + difficulty, 5, 50);
     }
 
     public ArrayList<Entity> getEntities() {
