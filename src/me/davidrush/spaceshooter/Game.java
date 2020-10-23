@@ -132,6 +132,7 @@ public class Game implements Runnable{
     public void gameOver() {
         GameOverState gameOverState = new GameOverState(this, score);
         State.setCurrentState(gameOverState);
+        score = 0;
     }
 
     public void startNew() {
