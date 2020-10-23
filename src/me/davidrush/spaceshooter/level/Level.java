@@ -11,7 +11,7 @@ public class Level {
     private Game game;
     private Player player;
     private float cameraY, distance;
-    private int cameraOffset = 620, enemySpawnDelay = 240;
+    private int cameraOffset = 620, enemySpawnDelay = 240, maxEnemies = 12;
     private double difficulty = 0;
     private ArrayList<Entity> entities, toRemove;
     private ArrayList<Actor> actors;
@@ -30,9 +30,9 @@ public class Level {
 
     public void tick() {
         double rand = Math.random();
-        if(rand <= Math.sqrt(difficulty) / 10000) {//enemies will spawn more frequently over time.
+        if(rand <= Math.sqrt(difficulty) / 10000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
-            if(enemyType > 0.1) {
+            if(enemyType > 0.03) {
                 addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
             } else if(enemyType > 0.01) {
                 addActor(new EnemyBomber((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
@@ -76,7 +76,6 @@ public class Level {
         }
         player.render(g);
         g.drawString("Score: " + game.score, 5, 20);
-        g.drawString("Difficulty: " + (Math.sqrt(difficulty) / 10000), 5, 50);
     }
 
     public ArrayList<Entity> getEntities() {

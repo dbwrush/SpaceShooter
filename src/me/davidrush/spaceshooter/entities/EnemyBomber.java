@@ -50,6 +50,10 @@ public class EnemyBomber extends Actor{
         if(health <= 0) {
             game.score += pointValue;
             level.removeEntity(this);
+            if(Math.random() < HealthDrop.getDropRate()) {
+                System.out.println("Added healthdrop");
+                level.addEntity(new HealthDrop(x, y, level, game));
+            }
         }
         move();
     }

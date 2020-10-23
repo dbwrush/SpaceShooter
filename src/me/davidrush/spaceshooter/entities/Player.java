@@ -140,4 +140,8 @@ public class Player extends Actor{
     public int getAvailablePower() {
         return availablePower;
     }
+
+    public int getDefaultHealth() {
+        return defaultHealth;
+    }
 }

@@ -3,21 +3,18 @@ package me.davidrush.spaceshooter;
 import me.davidrush.Display;
 import me.davidrush.KeyManager;
 import me.davidrush.spaceshooter.graphics.Assets;
-import me.davidrush.spaceshooter.states.GameOverState;
-import me.davidrush.spaceshooter.states.GameState;
-import me.davidrush.spaceshooter.states.State;
-import me.davidrush.spaceshooter.states.TitleScreenState;
+import me.davidrush.spaceshooter.states.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Game implements Runnable{
     private Display display;
-    public int width, height, score;
+    public int width, height, score, escDelay = 30, sinceEscLastPressed;
     private final String title;
     private static final String version = "Space Shooter Test v1.5";
 
-    private boolean running = false;
+    private boolean running = false, paused = false;
     private Thread thread;
 
     protected BufferStrategy bs;
@@ -28,6 +25,7 @@ public class Game implements Runnable{
 
     //states
     protected static State gameState;
+    protected State savedState;
 
     public Game(String title, int width, int height) {
         this.width = width;
@@ -49,6 +47,26 @@ public class Game implements Runnable{
         if(State.getCurrentState() != null) {
             State.getCurrentState().tick();
         }
+        if(keyManager.escape && sinceEscLastPressed > escDelay) {
+            System.out.println("Esc pressed!");
+            if(!paused) {
+                System.out.println("Switched to pause state!");
+                sinceEscLastPressed = 0;
+                savedState = State.getCurrentState();
+                State.setCurrentState(new PauseState(this, score));
+                paused = true;
+            } else {
+                System.out.println("Switched to saved state!");
+                sinceEscLastPressed = 0;
+                if(savedState != null) {
+                    State.setCurrentState(savedState);
+                } else {
+                    startNew();
+                }
+                paused = false;
+            }
+        }
+        sinceEscLastPressed++;
     }
 
     private void render() {

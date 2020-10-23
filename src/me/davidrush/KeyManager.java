@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyManager implements KeyListener {
     private boolean[] keys;
-    public boolean up, down, left, right, fire, engineSelect, shieldSelect, weaponSelect, powerUp, powerDown, start, shift;
+    public boolean up, down, left, right, fire, engineSelect, shieldSelect, weaponSelect, powerUp, powerDown, start, shift, escape;
 
     public KeyManager() {
         keys = new boolean[256];
@@ -24,6 +24,7 @@ public class KeyManager implements KeyListener {
         powerDown = keys[KeyEvent.VK_F];
         start = keys[KeyEvent.VK_ENTER];
         shift = keys[KeyEvent.VK_SHIFT];
+        escape = keys[KeyEvent.VK_ESCAPE];
     }
 
     @Override

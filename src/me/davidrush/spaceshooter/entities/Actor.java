@@ -59,4 +59,8 @@ public abstract class Actor extends Entity{
     public int getHealth() {
         return health;
     }
+
+    public void setHealth(int newHealth) {
+        health = newHealth;
+    }
 }
