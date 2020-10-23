@@ -31,7 +31,7 @@ public class HealthDrop extends Entity{
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(sprite, (int)x, (int)y, null);
+        g.drawImage(sprite, (int)x, (int)(y - level.getCameraY()), null);
     }
 
     public static double getDropRate() {

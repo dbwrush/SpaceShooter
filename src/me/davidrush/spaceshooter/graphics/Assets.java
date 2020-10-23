@@ -24,7 +24,7 @@ public class Assets {
         gameOver = ImageLoader.loadImage("/textures/gameOver.png");
         title = ImageLoader.loadImage("/textures/title.png");
         controls = ImageLoader.loadImage("/textures/controls.png");
-        healthDrop = ImageLoader.loadImage("/textures/controls.png");
+        healthDrop = ImageLoader.loadImage("/textures/healthdrop.png");
         stars[0] = ImageLoader.loadImage("/textures/star0.png");
         stars[1] = ImageLoader.loadImage("/textures/star1.png");
         stars[2] = ImageLoader.loadImage("/textures/star2.png");

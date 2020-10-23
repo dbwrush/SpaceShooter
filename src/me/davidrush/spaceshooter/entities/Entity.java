@@ -27,7 +27,7 @@ public abstract class Entity {
 
     public boolean checkEntityCollisions(float newX, float newY) {
         for(Entity entity : level.getEntities()) {
-            if(!entity.equals(this)) {
+            if(!entity.equals(this) && !(entity instanceof HealthDrop)) {
                 if(checkCollide(entity, newX, newY)) {
                     return true;
                 }
