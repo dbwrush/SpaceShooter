@@ -11,7 +11,7 @@ public class HealthDrop extends Entity{
     private int health;
     private static BufferedImage sprite = Assets.healthDrop;
     private static int default_acceleration = 0, maxHealth = 20;
-    private static double dropRate = 0.05;
+    private static double dropRate = 0.01;
     public HealthDrop(float x, float y, Level level, Game game) {
         super(x, y, default_acceleration, sprite.getWidth(), sprite.getHeight(), level, game);
         System.out.println("HealthDrop!");
