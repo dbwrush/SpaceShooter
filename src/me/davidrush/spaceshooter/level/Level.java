@@ -11,7 +11,7 @@ public class Level {
     private Game game;
     private Player player;
     private float cameraY, distance;
-    private int cameraOffset = 620, enemySpawnDelay = 240, maxEnemies = 16;
+    private int cameraOffset = 620, maxEnemies = 16;
     private double difficulty = 0;
     private ArrayList<Entity> entities, toRemove;
     private ArrayList<Actor> actors;

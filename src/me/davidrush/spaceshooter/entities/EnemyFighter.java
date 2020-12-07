@@ -59,8 +59,9 @@ public class EnemyFighter extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        float playerX = (int)player.getX();
-        float playerY = (int)player.getY();
+        float playerX = player.getX();
+        float playerY = player.getY();
+        playerY -= player.yMove * 60; //aims for where the player should be in about 1 second
         double angle = -Math.atan2(playerY - y, playerX - x);
         level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, angle , Assets.colors[1], false, laserStrength, level, game, yMove));
         timeSinceLastFire = 0;
