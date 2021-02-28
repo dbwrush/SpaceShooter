@@ -13,7 +13,7 @@ public class Player extends Actor{
     private final BufferedImage sprite;
     private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = engines/speed
     private final int powerChangeDelay = 10, fireDelay = 40;
-    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay, shieldUpgradeLevel = 3, weaponUpgradeLevel = 1;
+    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay, shieldUpgradeLevel = 1, weaponUpgradeLevel = 1;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {

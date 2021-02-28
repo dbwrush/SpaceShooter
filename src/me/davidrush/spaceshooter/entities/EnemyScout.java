@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class EnemyScout extends Actor{
     BufferedImage sprite;
-    private static int laserStrength = 3, fireDelay = 60, pointValue = 10, defaultHealth = 5;
+    private static int laserStrength = 4, fireDelay = 60, pointValue = 10, defaultHealth = 5;
     private int timeSinceLastFire = 0;
     private boolean avoidByGoingRight;
     Player player;
