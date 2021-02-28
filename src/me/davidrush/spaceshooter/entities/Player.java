@@ -73,7 +73,7 @@ public class Player extends Actor{
         if(game.getKeyManager().weaponSelect && game.getKeyManager().shift) {
             decreasePower(0);
         }
-        laserSpeed = (acceleration * 10) - yMove;
+        laserSpeed = (acceleration * 5) - yMove;
         timeSinceLastFire++;
         timeSincePowerChange++;
     }

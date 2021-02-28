@@ -48,7 +48,7 @@ public class Laser extends Entity{
     public void render(Graphics g) {
         g.drawImage(Assets.colors[0], (int)x - (color.getWidth() * scale / 2), (int)(y + (color.getHeight() * scale / 2) - level.getCameraY()), color.getWidth() * scale, color.getHeight() * scale, null);
         for(int i = 0; i < strength; i++) {
-            g.drawImage(color, (int)(x - (color.getWidth() * scale / 2) - (xSpeed / 2) * i), (int)((y + (color.getHeight() * scale / 2) + (ySpeed / 2) * i) - level.getCameraY()), color.getWidth() * scale, color.getHeight() * scale, null);
+            g.drawImage(color, (int)(x - (color.getWidth() * scale / 2) - (xSpeed / acceleration) * 2 * i), (int)((y + (color.getHeight() * scale / 2) + (ySpeed / acceleration) * 2 * i) - level.getCameraY()), color.getWidth() * scale, color.getHeight() * scale, null);
         }
     }
 }
