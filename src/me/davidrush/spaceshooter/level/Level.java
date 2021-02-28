@@ -3,9 +3,12 @@ package me.davidrush.spaceshooter.level;
 import me.davidrush.spaceshooter.Game;
 import me.davidrush.spaceshooter.entities.*;
 import me.davidrush.spaceshooter.graphics.Assets;
+import me.davidrush.spaceshooter.graphics.Toast;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Level {
     private Game game;
@@ -16,6 +19,7 @@ public class Level {
     private ArrayList<Entity> entities, toRemove;
     private ArrayList<Actor> actors;
     private Entity[] stars = new Entity[100];
+    private ArrayList<Toast> toasts = new ArrayList<>(), toastsToRemove = new ArrayList<>();
 
     public Level(Game game) {
         this.game = game;
@@ -27,11 +31,17 @@ public class Level {
         for(int i = 0; i < stars.length; i++) {
             stars[i] = new Star((float)(Math.random() * game.width), (float)(cameraY + Assets.player.getHeight() +(Math.random() * game.height)), this, game);
         }
+        toasts.add(new Toast(240, "Welcome to the game!"));
+        toasts.add(new Toast(480, "Use WASD to move around!"));
+        toasts.add(new Toast(720, "Press SPACE to fire!"));
+        toasts.add(new Toast(960, "Power distribution is displayed in the bottom left."));
+        toasts.add(new Toast(1200, "Increase power to a system by pressing 1, 2, or 3."));
+        toasts.add(new Toast(1440, "Decrease power to a system by pressing SHIFT and 1, 2, or 3."));
     }
 
     public void tick() {
         double rand = Math.random();
-        if(rand <= Math.sqrt(difficulty) / 5000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
+        if(rand <= Math.sqrt(difficulty) / 1000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
             if(enemyType > 0.04) {
                 addActor(new EnemyCruiser((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
@@ -66,7 +76,17 @@ public class Level {
         }
         toRemove.clear();
         difficulty++;
-    }
+        for(Toast toast : toasts) {
+            toast.setTime(toast.getTime() - 1);
+            if(toast.getTime() <= 0) {
+                toastsToRemove.add(toast);
+            }
+        }
+        for(Toast toast : toastsToRemove) {
+            toasts.remove(toast);
+        }
+        toastsToRemove.clear();
+     }
 
     public void render(Graphics g) {
         for(Entity star : stars) {
@@ -80,6 +100,10 @@ public class Level {
         }
         player.render(g);
         g.drawString("Score: " + game.score, 5, 20);
+        for(int i = 0; i < toasts.size(); i++) {
+            String message = toasts.get(i).getMessage();
+            g.drawString(message, 5, i * 20 + 40);
+        }
     }
 
     public ArrayList<Entity> getEntities() {
@@ -126,5 +150,9 @@ public class Level {
 
     public void removeEntity(Entity entity) {
         toRemove.add(entity);
+    }
+
+    public void addToast(Toast toast) {
+        toasts.add(toast);
     }
 }

@@ -37,7 +37,7 @@ public class Assets {
         colors[1] = ImageLoader.loadImage("/textures/red.png");
         colors[2] = ImageLoader.loadImage("/textures/green.png");
         colors[3] = ImageLoader.loadImage("/textures/blue.png");
-        font = new Font("Ariel", Font.BOLD, 20);
+        font = new Font("Consolas", Font.BOLD, 20);
         System.out.println("Assets loaded");
     }
 }

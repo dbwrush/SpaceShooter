@@ -2,6 +2,7 @@ package me.davidrush.spaceshooter.entities;
 
 import me.davidrush.spaceshooter.Game;
 import me.davidrush.spaceshooter.graphics.Assets;
+import me.davidrush.spaceshooter.graphics.Toast;
 import me.davidrush.spaceshooter.level.Level;
 
 import java.awt.*;
@@ -22,9 +23,10 @@ public class HealthDrop extends Entity{
     public void tick() {
         if(checkCollide(level.getPlayer(), x, y)) {
             level.removeEntity(this);
+            level.addToast(new Toast(240, "Health recovered!"));
             level.getPlayer().setHealth(level.getPlayer().getHealth() + health);
-            if(level.getPlayer().health > level.getPlayer().getDefaultHealth()) {
-                level.getPlayer().setHealth(level.getPlayer().getDefaultHealth());
+            if(level.getPlayer().health > level.getPlayer().getMaxHealth()) {
+                level.getPlayer().setHealth(level.getPlayer().getMaxHealth());
             }
         }
     }

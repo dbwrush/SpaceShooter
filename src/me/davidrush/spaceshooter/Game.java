@@ -12,7 +12,7 @@ public class Game implements Runnable{
     private Display display;
     public int width, height, score, escDelay = 30, sinceEscLastPressed;
     private final String title;
-    private static final String version = "Space Shooter Test v1.6";
+    private static final String version = "Space Shooter Test v1.6.4";
 
     private boolean running = false, paused = false;
     private Thread thread;
@@ -89,7 +89,7 @@ public class Game implements Runnable{
             State.getCurrentState().render(g);
         }
         g.setColor(Color.WHITE);
-        g.drawString(version, width - 260, 20);
+        g.drawString(version, width - 300, 20);
 
         //stop drawing
         bs.show();

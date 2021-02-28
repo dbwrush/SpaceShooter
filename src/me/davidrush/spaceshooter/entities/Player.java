@@ -3,6 +3,7 @@ package me.davidrush.spaceshooter.entities;
 import me.davidrush.spaceshooter.Game;
 import me.davidrush.spaceshooter.HUD;
 import me.davidrush.spaceshooter.graphics.Assets;
+import me.davidrush.spaceshooter.graphics.Toast;
 import me.davidrush.spaceshooter.level.Level;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Player extends Actor{
     private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay, shieldUpgradeLevel = 1, weaponUpgradeLevel = 1;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
+    private int maxHealth;
     public Player(float x, float y, float acceleration, Level level, Game game) {
         super(x, y, acceleration, Assets.player.getWidth(), Assets.player.getHeight(), defaultHealth, level, game, Assets.player);
         hud = new HUD(this, game);
@@ -25,6 +27,7 @@ public class Player extends Actor{
         power[1] = maxPower / 4;
         power[2] = maxPower / 4;
         availablePower = maxPower / 4;
+        maxHealth = defaultHealth;
     }
 
     @Override
@@ -134,12 +137,18 @@ public class Player extends Actor{
         //TYPES: 0 = weapon, 1 = shield, 2 = speed
         switch(type) {
             case 0:
+                level.addToast(new Toast(240 ,"Weapons upgraded!"));
                 weaponUpgradeLevel += 1;
                 break;
             case 1:
+                level.addToast(new Toast(240 ,"Shields upgraded!"));
                 shieldUpgradeLevel += 1;
+                maxHealth += 5;
+                health += 5;
+                healthOffset = ((maxHealth * scale) / 2) - (sprite.getWidth() / 2);
                 break;
             case 2:
+                level.addToast(new Toast(240 ,"Engines upgraded!"));
                 acceleration += 0.1f;
                 break;
         }
@@ -159,5 +168,9 @@ public class Player extends Actor{
 
     public int getDefaultHealth() {
         return defaultHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }
