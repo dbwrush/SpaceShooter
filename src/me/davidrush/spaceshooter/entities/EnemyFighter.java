@@ -51,6 +51,10 @@ public class EnemyFighter extends Actor{
                 System.out.println("Added healthdrop");
                 level.addEntity(new HealthDrop(x, y, level, game));
             }
+            if(Math.random() < UpgradeDrop.getDropRate()) {
+                System.out.println("Added upgradeDrop");
+                level.addEntity(new UpgradeDrop(x, y, level, game));
+            }
         }
         move();
     }
@@ -63,7 +67,7 @@ public class EnemyFighter extends Actor{
         float playerY = player.getY();
         playerY -= player.yMove * 60; //aims for where the player should be in about 1 second
         double angle = -Math.atan2(playerY - y, playerX - x);
-        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, angle , Assets.colors[1], false, laserStrength, level, game, yMove));
+        level.addEntity(new Laser(x  + sprite.getWidth() / 2, y + sprite.getHeight(), acceleration * 3, angle , Assets.colors[1], this, laserStrength, level, game, yMove));
         timeSinceLastFire = 0;
     }
 

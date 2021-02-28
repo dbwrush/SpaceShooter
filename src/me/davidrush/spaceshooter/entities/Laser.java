@@ -11,11 +11,11 @@ public class Laser extends Entity{
     BufferedImage color;
     float xSpeed, ySpeed;
     int scale = 3, strength;
-    boolean fromPlayer;
-    public Laser(float x, float y, float acceleration, double angle, BufferedImage color, boolean fromPlayer, int strength, Level level, Game game, float creatorYMove) {
+    Actor creator;
+    public Laser(float x, float y, float acceleration, double angle, BufferedImage color, Actor creator, int strength, Level level, Game game, float creatorYMove) {
         super(x, y, acceleration, color.getWidth(), color.getHeight(), level, game);
         this.color = color;
-        this.fromPlayer = fromPlayer;
+        this.creator = creator;
         this.strength = strength;
         ySpeed = (float)Math.sin(angle) * acceleration + creatorYMove;
         xSpeed = (float)Math.cos(angle) * acceleration;
@@ -28,17 +28,19 @@ public class Laser extends Entity{
         if(y < level.getCameraY() || y > level.getCameraY() + game.height || x < 0 || x > game.width) {
             level.removeEntity(this);
         }
-        if(!fromPlayer) {
-            if(checkCollide(level.getPlayer(), x, y)) {
-                level.getPlayer().damage(strength);
-                level.removeEntity(this);
+        for(Actor actor : level.getActors()) {
+            if(!actor.equals(creator) && checkCollide(actor, x, y)) {
+                int aHealth = actor.getHealth();
+                actor.damage(strength);
+                strength -= aHealth;
+                if(strength <= 0) {//If a laser does more than enough damage to kill an enemy, the laser can go through that enemy to hit the one behind it!
+                    level.removeEntity(this);
+                }
             }
         }
-        for(Actor actor : level.getActors()) {
-            if(checkCollide(actor, x, y)) {
-                actor.damage(strength);
-                level.removeEntity(this);
-            }
+        if(!level.getPlayer().equals(creator) && checkCollide(level.getPlayer(), x, y)) {
+            level.getPlayer().damage(strength);
+            level.removeEntity(this);
         }
     }
 
@@ -50,3 +52,8 @@ public class Laser extends Entity{
         }
     }
 }
+
+//todo Add Enemy Cruiser.
+//todo Add Enemy Carrier (spawns Scouts and Fighters until destroyed.)
+//todo Add Enemy Controller (makes enemy movmenents around it more coordinated. Heals enemies. More powerful/more healthy enemies move to the front, weaker ones move back.
+//todo Add ship upgrade drops. Give a permanent buff to one aspect of the ship. More powerful turret, better shields, etc.

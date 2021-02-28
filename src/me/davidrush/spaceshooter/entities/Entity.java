@@ -44,6 +44,7 @@ public abstract class Entity {
     }
 
     public void move() {
+        /*
         boolean xCollided = checkEntityCollisions(x + xMove, y);
         boolean yCollided = checkEntityCollisions(x, y + yMove);
         boolean bothCollided = checkEntityCollisions(x + xMove, y + yMove);
@@ -60,6 +61,9 @@ public abstract class Entity {
             xMove = 0;
             yMove = 0;
         }
+        */
+        x+=xMove;
+        y+=yMove;
     }
 
     public float getX() {

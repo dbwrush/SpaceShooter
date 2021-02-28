@@ -20,6 +20,7 @@ public abstract class Actor extends Entity{
 
     @Override
     public void move() {
+        /*
         boolean xCollided = checkEntityCollisions(x + xMove, y);
         boolean yCollided = checkEntityCollisions(x, y + yMove);
         boolean bothCollided = checkEntityCollisions(x + xMove, y + yMove);
@@ -36,6 +37,9 @@ public abstract class Actor extends Entity{
             xMove = 0;
             yMove = 0;
         }
+        */
+        x += xMove;
+        y += yMove;
         if(x < 0) {
             x = 0;
         }

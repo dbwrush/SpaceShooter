@@ -13,7 +13,7 @@ public class Player extends Actor{
     private final BufferedImage sprite;
     private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = engines/speed
     private final int powerChangeDelay = 10, fireDelay = 40;
-    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay;
+    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay, shieldUpgradeLevel = 3, weaponUpgradeLevel = 1;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     public Player(float x, float y, float acceleration, Level level, Game game) {
@@ -82,7 +82,7 @@ public class Player extends Actor{
         if(timeSinceLastFire < fireDelay) {
             return;
         }
-        level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], true, power[0] + 1, level, game, yMove));
+        level.addEntity(new Laser(x  + (int)(sprite.getWidth() / 2.0), y, laserSpeed, Math.PI / 2, Assets.colors[3], this, (power[0] * weaponUpgradeLevel) + 1, level, game, yMove));
         timeSinceLastFire = 0;
     }
 
@@ -112,11 +112,12 @@ public class Player extends Actor{
 
     @Override
     public void damage(int amount) {
-        amount = amount / ((power[1] / 3) + 1);
-        if(amount <= 1) {
-            amount = 1;
+        //The shield should never be strong enough to ALWAYS block all of the damage, but the player should be able to upgrade it to block nearly all damage!
+        double damage = amount / ((power[1] * shieldUpgradeLevel) + 1);
+        if(damage <= 1 && Math.random() / (power[1] * shieldUpgradeLevel) >= 1) {
+            damage = 1;
         }
-        health -= amount;
+        health -= damage;
         if(health <= 0) {
             game.gameOver();
         }
@@ -127,6 +128,21 @@ public class Player extends Actor{
         drawHealthBar(g,(int)(y - level.getCameraY()) + sprite.getHeight());
         g.drawImage(sprite, (int)x, level.getCameraOffset(), null);
         hud.render(g);
+    }
+
+    public void upgrade(int type) {
+        //TYPES: 0 = weapon, 1 = shield, 2 = speed
+        switch(type) {
+            case 0:
+                weaponUpgradeLevel += 1;
+                break;
+            case 1:
+                shieldUpgradeLevel += 1;
+                break;
+            case 2:
+                acceleration += 0.1f;
+                break;
+        }
     }
 
     public int[] getPower() {

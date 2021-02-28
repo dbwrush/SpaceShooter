@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
-    public static BufferedImage player, enemyScout, enemyBomber, enemyFighter, hud, weapon, shield, engine, gameOver, title, controls, healthDrop;
+    public static BufferedImage player, enemyScout, enemyBomber, enemyFighter, enemyCruiser, hud, weapon, shield, engine, gameOver, title, controls, healthDrop, upgrade;
     public static BufferedImage[] stars, nebulae, galaxies, colors;
     public static Font font;
     public static void init() {
@@ -17,6 +17,7 @@ public class Assets {
         enemyScout = ImageLoader.loadImage("/textures/enemyScout.png");
         enemyBomber = ImageLoader.loadImage("/textures/enemyBomber.png");
         enemyFighter = ImageLoader.loadImage("/textures/enemyFighter.png");
+        enemyCruiser = ImageLoader.loadImage("/textures/enemyCruiser.png");
         hud = ImageLoader.loadImage("/textures/powerHUDSprite.png");
         weapon = ImageLoader.loadImage("/textures/weapon.png");
         shield = ImageLoader.loadImage("/textures/shield.png");
@@ -25,6 +26,7 @@ public class Assets {
         title = ImageLoader.loadImage("/textures/title.png");
         controls = ImageLoader.loadImage("/textures/controls.png");
         healthDrop = ImageLoader.loadImage("/textures/healthdrop.png");
+        upgrade = ImageLoader.loadImage("/textures/upgrade.png");
         stars[0] = ImageLoader.loadImage("/textures/star0.png");
         stars[1] = ImageLoader.loadImage("/textures/star1.png");
         stars[2] = ImageLoader.loadImage("/textures/star2.png");

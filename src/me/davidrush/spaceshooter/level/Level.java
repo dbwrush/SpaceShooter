@@ -22,7 +22,8 @@ public class Level {
         entities = new ArrayList<Entity>();
         actors = new ArrayList<Actor>();
         toRemove = new ArrayList<Entity>();
-        player = new Player(game.width / 2, game.height, 1f, this, game);
+        player = new Player(game.width / 2, game.height, 1f, this, game); //Note, the player cannot be added to the Entity or Actor list or else they will get ticked more than once!
+
         for(int i = 0; i < stars.length; i++) {
             stars[i] = new Star((float)(Math.random() * game.width), (float)(cameraY + Assets.player.getHeight() +(Math.random() * game.height)), this, game);
         }
@@ -32,7 +33,9 @@ public class Level {
         double rand = Math.random();
         if(rand <= Math.sqrt(difficulty) / 10000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
-            if(enemyType > 0.03) {
+            if(enemyType > 0.1) {
+                addActor(new EnemyCruiser((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
+            } else if(enemyType > 0.03) {
                 addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
             } else if(enemyType > 0.01) {
                 addActor(new EnemyBomber((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
@@ -107,10 +110,16 @@ public class Level {
     }
 
     public void addEntity(Entity entity) {
+        if(entity instanceof Player) {
+            System.out.println("Adding player to entity list??? That's not right! DONT DO THAT!!!");
+        }
         entities.add(entity);
     }
 
     public void addActor(Actor actor) {
+        if(actor instanceof Player) {
+            System.out.println("Adding player to actor list??? That's not right! DONT DO THAT!!!");
+        }
         actors.add(actor);
     }
 
