@@ -28,6 +28,11 @@ public class Star extends Entity{
             moveRatio = Math.random();
             changeSprite();
             y = level.getCameraY() - sprite.getHeight();
+        } else if(y < level.getCameraY() - sprite.getHeight()) {
+            x = (float)(Math.random() * game.width);
+            moveRatio = Math.random();
+            changeSprite();
+            y = level.getCameraY() + game.height;
         }
         y += moveRatio * level.getDistance();
     }

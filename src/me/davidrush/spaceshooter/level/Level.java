@@ -14,7 +14,7 @@ public class Level {
     private Game game;
     private Player player;
     private float cameraY, distance;
-    private int cameraOffset = 620, maxEnemies = 16;
+    private int cameraOffset, maxEnemies = 16;
     private double difficulty = 0;
     private ArrayList<Entity> entities, toRemove;
     private ArrayList<Actor> actors, actorsToAdd;
@@ -23,6 +23,7 @@ public class Level {
 
     public Level(Game game) {
         this.game = game;
+        cameraOffset = game.height - 100;
         entities = new ArrayList<Entity>();
         actors = new ArrayList<Actor>();
         toRemove = new ArrayList<Entity>();
@@ -30,7 +31,7 @@ public class Level {
         player = new Player(game.width / 2, game.height, 1f, this, game); //Note, the player cannot be added to the Entity or Actor list or else they will get ticked more than once!
 
         for(int i = 0; i < stars.length; i++) {
-            stars[i] = new Star((float)(Math.random() * game.width), (float)(cameraY + Assets.player.getHeight() +(Math.random() * game.height)), this, game);
+            stars[i] = new Star((float)(Math.random() * game.width), (float)(cameraY + (Math.random() * game.height)), this, game);
         }
         toasts.add(new Toast(240, "Welcome to the game!"));
         toasts.add(new Toast(480, "Use WASD to move around!"));
