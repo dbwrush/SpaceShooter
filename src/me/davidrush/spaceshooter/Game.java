@@ -12,7 +12,7 @@ public class Game implements Runnable{
     private Display display;
     public int width, height, score, escDelay = 30, sinceEscLastPressed;
     private final String title;
-    private static final String version = "Space Shooter Test v1.6.4";
+    private static final String version = "Space Shooter Test v1.6.5";
 
     private boolean running = false, paused = false;
     private Thread thread;
