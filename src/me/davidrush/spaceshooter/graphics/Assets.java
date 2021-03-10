@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
-    public static BufferedImage player, enemyScout, enemyBomber, enemyFighter, enemyCruiser, hud, weapon, shield, engine, gameOver, title, controls, healthDrop, upgrade;
+    public static BufferedImage player, enemyScout, enemyBomber, enemyFighter, enemyCruiser, enemyCarrier, hud, weapon, shield, engine, gameOver, title, controls, healthDrop, upgrade;
     public static BufferedImage[] stars, nebulae, galaxies, colors;
     public static Font font;
     public static void init() {
@@ -18,6 +18,7 @@ public class Assets {
         enemyBomber = ImageLoader.loadImage("/textures/enemyBomber.png");
         enemyFighter = ImageLoader.loadImage("/textures/enemyFighter.png");
         enemyCruiser = ImageLoader.loadImage("/textures/enemyCruiser.png");
+        enemyCarrier = ImageLoader.loadImage("/textures/enemyCarrier.png");
         hud = ImageLoader.loadImage("/textures/powerHUDSprite.png");
         weapon = ImageLoader.loadImage("/textures/weapon.png");
         shield = ImageLoader.loadImage("/textures/shield.png");

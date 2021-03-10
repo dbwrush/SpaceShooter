@@ -17,7 +17,7 @@ public class Level {
     private int cameraOffset = 620, maxEnemies = 16;
     private double difficulty = 0;
     private ArrayList<Entity> entities, toRemove;
-    private ArrayList<Actor> actors;
+    private ArrayList<Actor> actors, actorsToAdd;
     private Entity[] stars = new Entity[100];
     private ArrayList<Toast> toasts = new ArrayList<>(), toastsToRemove = new ArrayList<>();
 
@@ -26,6 +26,7 @@ public class Level {
         entities = new ArrayList<Entity>();
         actors = new ArrayList<Actor>();
         toRemove = new ArrayList<Entity>();
+        actorsToAdd = new ArrayList<Actor>();
         player = new Player(game.width / 2, game.height, 1f, this, game); //Note, the player cannot be added to the Entity or Actor list or else they will get ticked more than once!
 
         for(int i = 0; i < stars.length; i++) {
@@ -43,7 +44,9 @@ public class Level {
         double rand = Math.random();
         if(rand <= Math.sqrt(difficulty) / 1000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
-            if(enemyType > 0.04) {
+            if(enemyType > 0.05) {
+                addActor(new EnemyCarrier((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
+            } else if(enemyType > 0.04) {
                 addActor(new EnemyCruiser((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
             } else if(enemyType > 0.03) {
                 addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
@@ -74,6 +77,10 @@ public class Level {
                 actors.remove(entity);
             }
         }
+        for(Actor actor : actorsToAdd) {
+            actors.add(actor);
+        }
+        actorsToAdd.clear();
         toRemove.clear();
         difficulty++;
         for(Toast toast : toasts) {
@@ -144,8 +151,17 @@ public class Level {
     public void addActor(Actor actor) {
         if(actor instanceof Player) {
             System.out.println("Adding player to actor list??? That's not right! DONT DO THAT!!!");
+            return;
         }
         actors.add(actor);
+    }
+
+    public void addActorConcurrent(Actor actor) {
+        if(actor instanceof Player) {
+            System.out.println("Adding player to actor list??? That's not right! DONT DO THAT!!!");
+            return;
+        }
+       actorsToAdd.add(actor);
     }
 
     public void removeEntity(Entity entity) {

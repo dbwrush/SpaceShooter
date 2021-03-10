@@ -53,7 +53,6 @@ public class Laser extends Entity{
     }
 }
 
-//todo Add Enemy Cruiser.
 //todo Add Enemy Carrier (spawns Scouts and Fighters until destroyed.)
 //todo Add Enemy Controller (makes enemy movmenents around it more coordinated. Heals enemies. More powerful/more healthy enemies move to the front, weaker ones move back.
 //todo Add ship upgrade drops. Give a permanent buff to one aspect of the ship. More powerful turret, better shields, etc.
