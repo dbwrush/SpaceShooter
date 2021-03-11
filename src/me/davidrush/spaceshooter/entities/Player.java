@@ -13,8 +13,9 @@ public class Player extends Actor{
     private final HUD hud;
     private final BufferedImage sprite;
     private final int[] power = new int[3]; //0 = weapon, 1 = shield, 2 = engines/speed
-    private final int powerChangeDelay = 10, fireDelay = 40;
-    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = fireDelay, shieldUpgradeLevel = 1, weaponUpgradeLevel = 1;
+    private final int powerChangeDelay = 10;
+    private double fireDelay = 40;
+    private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = (int)fireDelay, shieldUpgradeLevel = 1, weaponUpgradeLevel = 1, engineUpgradeLevel = 1;
     private static final int maxPower = 12, defaultHealth = 20;
     private float laserSpeed = 0;
     private int maxHealth;
@@ -39,8 +40,7 @@ public class Player extends Actor{
     }
 
     public void getInput() {
-        double enginePower = power[2];
-        enginePower = (enginePower / 3) + 1;
+        double enginePower = acceleration + power[2] * engineUpgradeLevel;
         xMove = 0;
         yMove = (float)((2 * -acceleration / 3) * enginePower);
         if(game.getKeyManager().fire) {
@@ -138,18 +138,19 @@ public class Player extends Actor{
         switch(type) {
             case 0:
                 level.addToast(new Toast(240 ,"Weapons upgraded!"));
-                weaponUpgradeLevel += 1;
+                weaponUpgradeLevel++;
+                fireDelay = fireDelay * 0.95;
                 break;
             case 1:
                 level.addToast(new Toast(240 ,"Shields upgraded!"));
-                shieldUpgradeLevel += 1;
+                shieldUpgradeLevel++;
                 maxHealth += 5;
                 health += 5;
                 healthOffset = ((maxHealth * scale) / 2) - (sprite.getWidth() / 2);
                 break;
             case 2:
                 level.addToast(new Toast(240 ,"Engines upgraded!"));
-                acceleration += 0.1f;
+                engineUpgradeLevel++;
                 break;
         }
     }

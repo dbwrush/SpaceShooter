@@ -14,9 +14,9 @@ public class Level {
     private Game game;
     private Player player;
     private float cameraY, distance;
-    private int cameraOffset, maxEnemies = 16;
+    private int cameraOffset, maxEnemies = 10;
     private double difficulty = 0;
-    private ArrayList<Entity> entities, toRemove;
+    private ArrayList<Entity> entities, toRemove, entitiesToAdd;
     private ArrayList<Actor> actors, actorsToAdd;
     private Entity[] stars = new Entity[100];
     private ArrayList<Toast> toasts = new ArrayList<>(), toastsToRemove = new ArrayList<>();
@@ -28,6 +28,7 @@ public class Level {
         actors = new ArrayList<Actor>();
         toRemove = new ArrayList<Entity>();
         actorsToAdd = new ArrayList<Actor>();
+        entitiesToAdd = new ArrayList<Entity>();
         player = new Player(game.width / 2, game.height, 1f, this, game); //Note, the player cannot be added to the Entity or Actor list or else they will get ticked more than once!
 
         for(int i = 0; i < stars.length; i++) {
@@ -45,11 +46,11 @@ public class Level {
         double rand = Math.random();
         if(rand <= Math.sqrt(difficulty) / 1000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
             double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
-            if(enemyType > 0.05) {
+            if(enemyType > 0.04) {
                 addActor(new EnemyCarrier((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
-            } else if(enemyType > 0.04) {
-                addActor(new EnemyCruiser((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
             } else if(enemyType > 0.03) {
+                addActor(new EnemyCruiser((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
+            } else if(enemyType > 0.02) {
                 addActor(new EnemyFighter((float)Math.random() * game.width, (cameraY) - Assets.enemyFighter.getHeight(), 1f,  this, game));
             } else if(enemyType > 0.01) {
                 addActor(new EnemyBomber((float)Math.random() * game.width, (cameraY) - Assets.enemyBomber.getHeight(), 1f,  this, game));
@@ -61,27 +62,33 @@ public class Level {
         float startCameraY = cameraY;
         player.tick();
         distance = startCameraY - cameraY;
-        for(Entity star : stars) {
+
+        for(Entity star : stars) {//tick stars
             star.tick();
         }
-        for(Entity entity : entities) {
+        for(Entity entity : entities) {//tick entities
             entity.tick();
         }
-        for(Actor actor : actors) {
+        for(Actor actor : actors) {//tick actors
             actor.tick();
         }
-        for(Entity entity : toRemove) {
+        for(Entity entity : toRemove) {//remove unwanted entites/actors
             if(entities.contains(entity)) {
                 entities.remove(entity);
             }
             if(actors.contains(entity)) {
+                addEntityConcurrent(new Explosion(entity.getX(), entity.getY(), this, game, entity));
                 actors.remove(entity);
             }
+        }
+        for(Entity entity : entitiesToAdd) {
+            entities.add(entity);
         }
         for(Actor actor : actorsToAdd) {
             actors.add(actor);
         }
         actorsToAdd.clear();
+        entitiesToAdd.clear();
         toRemove.clear();
         difficulty++;
         for(Toast toast : toasts) {
@@ -162,7 +169,13 @@ public class Level {
             System.out.println("Adding player to actor list??? That's not right! DONT DO THAT!!!");
             return;
         }
-       actorsToAdd.add(actor);
+        actorsToAdd.add(actor);
+    }
+    public void addEntityConcurrent(Entity entity) {
+        if(entity instanceof Player) {//no don't
+            return;
+        }
+        entitiesToAdd.add(entity);
     }
 
     public void removeEntity(Entity entity) {

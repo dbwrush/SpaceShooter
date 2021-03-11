@@ -50,6 +50,9 @@ public abstract class Actor extends Entity{
 
     public void damage(int amount) {
         health -= amount;
+        if(health <= 0) {
+            level.addEntityConcurrent(new Explosion(x, y, level, game, this));
+        }
     }
 
     public abstract void render(Graphics g);
