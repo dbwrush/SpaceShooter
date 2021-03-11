@@ -9,6 +9,7 @@ public class ImageLoader {
         try {
             return ImageIO.read(ImageLoader.class.getResource(path));
         } catch(IOException e) {
+            System.out.println(path);
             e.printStackTrace();
         }
         return null;
