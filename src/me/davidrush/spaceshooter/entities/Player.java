@@ -116,11 +116,7 @@ public class Player extends Actor{
 
     @Override
     public void damage(int amount) {
-        //The shield should never be strong enough to ALWAYS block all of the damage, but the player should be able to upgrade it to block nearly all damage!
-        double damage = amount / ((power[1] * shieldUpgradeLevel) + 1);
-        if(damage <= 1 && Math.random() / (power[1] * shieldUpgradeLevel) >= 1) {
-            damage = 1;
-        }
+        double damage = amount / (Math.random() * power[1] * Math.sqrt(shieldUpgradeLevel));
         health -= damage;
         if(health <= 0) {
             game.gameOver();
