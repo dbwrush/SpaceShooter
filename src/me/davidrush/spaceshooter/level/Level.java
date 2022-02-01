@@ -44,8 +44,8 @@ public class Level {
 
     public void tick() {
         double rand = Math.random();
-        if(rand <= Math.sqrt(difficulty) / 1000 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
-            double enemyType = (Math.sqrt(difficulty) / 10000) - rand;
+        if(rand <= Math.sqrt(difficulty) / 100 && actors.size() < maxEnemies) {//enemies will spawn more frequently over time.
+            double enemyType = (Math.sqrt(difficulty) / 8000) - rand;
             if(enemyType > 0.04) {
                 addActor(new EnemyCarrier((float)Math.random() * game.width, (cameraY) - Assets.enemyCruiser.getHeight(), 1f, this, game));
             } else if(enemyType > 0.03) {

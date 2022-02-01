@@ -17,7 +17,7 @@ public class Player extends Actor{
     private final int powerChangeDelay = 10;
     private double fireDelay = 40;
     private int powerSelect, availablePower, timeSincePowerChange = powerChangeDelay, timeSinceLastFire = (int)fireDelay, shieldUpgradeLevel = 1, weaponUpgradeLevel = 1, engineUpgradeLevel = 1;
-    private static final int maxPower = 12, defaultHealth = 20;
+    private static final int maxPower = 12, defaultHealth = 10;
     private float laserSpeed = 0;
     private int maxHealth;
     public Player(float x, float y, float acceleration, Level level, Game game) {

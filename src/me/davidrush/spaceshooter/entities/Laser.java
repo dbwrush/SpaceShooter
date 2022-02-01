@@ -29,7 +29,10 @@ public class Laser extends Entity{
             level.removeEntity(this);
         }
         for(Actor actor : level.getActors()) {
-            if(!actor.equals(creator) && checkCollide(actor, x, y)) {
+            if(!actor.equals(creator) && checkCollide(actor, x, y)) {//Hit an enemy
+                if(!(creator instanceof Player)) {//Came from an enemy
+                    strength *= (Math.random() * 0.2);
+                }
                 int aHealth = actor.getHealth();
                 actor.damage(strength);
                 strength -= aHealth;
@@ -38,7 +41,7 @@ public class Laser extends Entity{
                 }
             }
         }
-        if(!level.getPlayer().equals(creator) && checkCollide(level.getPlayer(), x, y)) {
+        if(!level.getPlayer().equals(creator) && checkCollide(level.getPlayer(), x, y)) {//Hit the player
             level.getPlayer().damage(strength);
             level.removeEntity(this);
         }

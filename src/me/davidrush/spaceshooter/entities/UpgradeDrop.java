@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class UpgradeDrop extends Entity{
     private static BufferedImage sprite = Assets.upgrade;
     private static int default_acceleration = 0;
-    private static double dropRate = 0.01;
+    private static double dropRate = 0.005;
     private int upgradeType;
     public UpgradeDrop(float x, float y, Level level, Game game) {
         super(x, y, default_acceleration, sprite.getWidth(), sprite.getHeight(), level, game);
