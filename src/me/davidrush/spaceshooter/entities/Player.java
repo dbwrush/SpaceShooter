@@ -1,5 +1,6 @@
 package me.davidrush.spaceshooter.entities;
 
+import me.davidrush.KeyManager;
 import me.davidrush.spaceshooter.Game;
 import me.davidrush.spaceshooter.HUD;
 import me.davidrush.spaceshooter.graphics.Assets;
